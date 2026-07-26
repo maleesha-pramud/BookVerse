@@ -21,6 +21,7 @@
     <servlet>
         <servlet-name>ControllerServlet</servlet-name>
         <servlet-class>com.bookverse.controller.ControllerServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>

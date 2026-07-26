@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="bookDao" class="com.bookverse.dao.BookDAO" scope="application" />
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate var="hour" value="${now}" pattern="H" />
 <c:choose>
@@ -34,7 +33,7 @@
 
     <div class="stats-row">
         <div class="stat-box">
-            <div class="num">${fn:length(bookDao.allBooks)}</div>
+            <div class="num">${fn:length(applicationScope.bookDao.allBooks)}</div>
             <div class="label">Books in catalogue</div>
         </div>
         <div class="stat-box">

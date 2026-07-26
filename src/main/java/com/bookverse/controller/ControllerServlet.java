@@ -38,6 +38,13 @@ public class ControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
+    public void init() throws ServletException {
+        // Place the singleton BookDAO into the application scope on startup 
+        // so JSPs (like index.jsp) can access it directly via EL without scriptlets or useBean
+        getServletContext().setAttribute("bookDao", BookDAO.getInstance());
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         process(request, response);

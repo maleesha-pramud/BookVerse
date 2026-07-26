@@ -54,4 +54,30 @@ public class MemberDAO {
         }
         members.add(member);
     }
+
+    public synchronized List<Member> getAllMembers() {
+        return new ArrayList<>(members);
+    }
+
+    public synchronized Member getMemberById(int id) {
+        for (Member m : members) {
+            if (m.getId() == id) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    public synchronized void updateMember(Member member) {
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getId() == member.getId()) {
+                members.set(i, member);
+                break;
+            }
+        }
+    }
+
+    public synchronized void deleteMember(int id) {
+        members.removeIf(m -> m.getId() == id);
+    }
 }

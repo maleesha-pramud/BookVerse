@@ -18,6 +18,7 @@
                 <a href="${pageContext.request.contextPath}/controller?action=history">History</a>
                 <c:if test="${sessionScope.member.admin}">
                     <a href="${pageContext.request.contextPath}/controller?action=addBookForm">Add Book</a>
+                    <a href="${pageContext.request.contextPath}/controller?action=manageUsers">Manage Users</a>
                 </c:if>
                 <a href="${pageContext.request.contextPath}/controller?action=logout">
                     Logout (${sessionScope.member.username})

@@ -3,6 +3,8 @@ package com.bookverse.dao;
 import com.bookverse.model.BorrowRecord;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,6 +16,21 @@ public class BorrowDAO {
     private final AtomicInteger idGenerator = new AtomicInteger(1);
 
     private BorrowDAO() {
+        seedData();
+    }
+
+    private void seedData() {
+        Calendar cal = Calendar.getInstance();
+        Date borrow1 = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        Date due1 = cal.getTime();
+        addRecord(new BorrowRecord(0, 1, "Clean Code", "member1", borrow1, due1, "BORROWED"));
+        
+        cal.add(Calendar.DAY_OF_MONTH, -30);
+        Date borrow2 = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        Date due2 = cal.getTime();
+        addRecord(new BorrowRecord(0, 2, "The Pragmatic Programmer", "member2", borrow2, due2, "OVERDUE"));
     }
 
     public static BorrowDAO getInstance() {
@@ -33,5 +50,9 @@ public class BorrowDAO {
             }
         }
         return result;
+    }
+
+    public synchronized List<BorrowRecord> getAllRecords() {
+        return new ArrayList<>(records);
     }
 }

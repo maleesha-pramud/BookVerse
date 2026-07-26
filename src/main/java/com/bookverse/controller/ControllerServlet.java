@@ -110,6 +110,27 @@ public class ControllerServlet extends HttpServlet {
             case "addBook":
                 view = doAddBook(request);
                 break;
+            case "approveReservation":
+                view = doApproveReservation(request);
+                break;
+            case "issueReservation":
+                view = doIssueReservation(request);
+                break;
+            case "manageUsers":
+                view = showManageUsers(request);
+                break;
+            case "addUserForm":
+                view = "admin_user_form.jsp";
+                break;
+            case "adminSaveUser":
+                view = doAdminSaveUser(request);
+                break;
+            case "editUserForm":
+                view = showEditUserForm(request);
+                break;
+            case "deleteUser":
+                view = doDeleteUser(request);
+                break;
             default:
                 view = "catalogue.jsp";
         }
@@ -243,6 +264,12 @@ public class ControllerServlet extends HttpServlet {
         if (member == null) {
             return "login.jsp";
         }
+        
+        if (member.isAdmin()) {
+            request.setAttribute("allReservations", ReservationDAO.getInstance().getAllReservations());
+            request.setAttribute("allBorrowed", BorrowDAO.getInstance().getAllRecords());
+        }
+        
         List<Reservation> myReservations = ReservationDAO.getInstance().getReservationsForUser(member.getUsername());
         List<BorrowRecord> myBorrowed = BorrowDAO.getInstance().getHistoryForUser(member.getUsername());
         request.setAttribute("myReservations", myReservations);
@@ -285,6 +312,118 @@ public class ControllerServlet extends HttpServlet {
         BookDAO.getInstance().addBook(book);
         request.getSession().setAttribute("flashMessage", "\"" + book.getTitle() + "\" was added to the catalogue.");
         return showCatalogue(request);
+    }
+
+    private String doApproveReservation(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        int id = parseInt(request.getParameter("id"), -1);
+        ReservationDAO.getInstance().updateReservationStatus(id, "READY");
+        request.getSession().setAttribute("flashMessage", "Reservation approved and marked as READY.");
+        return showDashboard(request);
+    }
+
+    private String doIssueReservation(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        int id = parseInt(request.getParameter("id"), -1);
+        Reservation res = ReservationDAO.getInstance().getReservationById(id);
+        if (res != null && "READY".equals(res.getStatus())) {
+            res.setStatus("ISSUED");
+            
+            Calendar cal = Calendar.getInstance();
+            Date borrowDate = cal.getTime();
+            cal.add(Calendar.DAY_OF_MONTH, 14);
+            Date dueDate = cal.getTime();
+            
+            BorrowRecord record = new BorrowRecord(0, res.getBookId(), res.getBookTitle(),
+                    res.getUsername(), borrowDate, dueDate, "BORROWED");
+            BorrowDAO.getInstance().addRecord(record);
+            BookDAO.getInstance().decreaseAvailability(res.getBookId());
+            
+            request.getSession().setAttribute("flashMessage", "Book issued successfully for reservation.");
+        }
+        return showDashboard(request);
+    }
+
+    private String showManageUsers(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        request.setAttribute("allMembers", MemberDAO.getInstance().getAllMembers());
+        return "admin_users.jsp";
+    }
+
+    private String showEditUserForm(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        int id = parseInt(request.getParameter("id"), -1);
+        Member target = MemberDAO.getInstance().getMemberById(id);
+        if (target != null) {
+            request.setAttribute("targetMember", target);
+            return "admin_user_form.jsp";
+        }
+        return showManageUsers(request);
+    }
+
+    private String doAdminSaveUser(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        int id = parseInt(request.getParameter("id"), 0);
+        String username = request.getParameter("username");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String memberType = request.getParameter("memberType");
+        
+        if (id > 0) {
+            // Edit existing
+            Member target = MemberDAO.getInstance().getMemberById(id);
+            if (target != null) {
+                target.setUsername(username);
+                target.setFullName(fullName);
+                target.setEmail(email);
+                target.setMemberType(memberType);
+                
+                String password = request.getParameter("password");
+                if (password != null && !password.trim().isEmpty()) {
+                    target.setPassword(password);
+                }
+                MemberDAO.getInstance().updateMember(target);
+                request.getSession().setAttribute("flashMessage", "User updated successfully.");
+            }
+        } else {
+            // Add new
+            String password = request.getParameter("password");
+            Member newMem = new Member(0, username, password, fullName, email, memberType);
+            MemberDAO.getInstance().register(newMem);
+            request.getSession().setAttribute("flashMessage", "User added successfully.");
+        }
+        return showManageUsers(request);
+    }
+
+    private String doDeleteUser(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        int id = parseInt(request.getParameter("id"), -1);
+        Member target = MemberDAO.getInstance().getMemberById(id);
+        if (target != null && target.getId() != member.getId()) {
+            MemberDAO.getInstance().deleteMember(id);
+            request.getSession().setAttribute("flashMessage", "User deleted successfully.");
+        } else if (target != null && target.getId() == member.getId()) {
+            request.getSession().setAttribute("flashMessage", "Cannot delete your own admin account.");
+        }
+        return showManageUsers(request);
     }
 
     // ---------------------------------------------------------------

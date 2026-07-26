@@ -45,7 +45,63 @@
             <div class="num">${fn:length(myReservations)}</div>
             <div class="label">Active Reservations</div>
         </div>
+        
+        <c:if test="${sessionScope.member.admin}">
+            <div class="stat-box">
+                <div class="num">${fn:length(allBorrowed)}</div>
+                <div class="label">Total System Borrows</div>
+            </div>
+            <div class="stat-box">
+                <div class="num">${fn:length(allReservations)}</div>
+                <div class="label">Total System Reservations</div>
+            </div>
+        </c:if>
     </div>
+
+    <c:if test="${sessionScope.member.admin}">
+        <div class="card">
+            <h3>Admin Overview: All Active Reservations</h3>
+            <div class="table-container">
+            <table>
+                <tr><th>User</th><th>Book</th><th>Date</th><th>Status</th><th>Action</th></tr>
+                <c:forEach var="r" items="${allReservations}">
+                    <tr>
+                        <td>${r.username}</td>
+                        <td>${r.bookTitle}</td>
+                        <td><fmt:formatDate value="${r.reservationDate}" pattern="dd MMM yyyy" /></td>
+                        <td><span class="status ${r.status == 'READY' ? 'available' : 'unavailable'}">${r.status}</span></td>
+                        <td>
+                            <c:if test="${r.status == 'PENDING'}">
+                                <a href="${pageContext.request.contextPath}/controller?action=approveReservation&id=${r.id}" class="btn btn-small">Approve</a>
+                            </c:if>
+                            <c:if test="${r.status == 'READY'}">
+                                <a href="${pageContext.request.contextPath}/controller?action=issueReservation&id=${r.id}" class="btn btn-small">Issue</a>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>Admin Overview: All Borrowed Books</h3>
+            <div class="table-container">
+            <table>
+                <tr><th>User</th><th>Book</th><th>Borrowed On</th><th>Due Date</th><th>Status</th></tr>
+                <c:forEach var="rec" items="${allBorrowed}">
+                    <tr>
+                        <td>${rec.username}</td>
+                        <td>${rec.bookTitle}</td>
+                        <td><fmt:formatDate value="${rec.borrowDate}" pattern="dd MMM yyyy" /></td>
+                        <td><fmt:formatDate value="${rec.dueDate}" pattern="dd MMM yyyy" /></td>
+                        <td><span class="status ${rec.status == 'OVERDUE' ? 'unavailable' : 'available'}">${rec.status}</span></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            </div>
+        </div>
+    </c:if>
 
     <div class="card">
         <h3>My Reservations</h3>
@@ -54,6 +110,7 @@
                 <p class="empty-state">You have no reservations yet.</p>
             </c:when>
             <c:otherwise>
+                <div class="table-container">
                 <table>
                     <tr><th>Book</th><th>Date</th><th>Status</th></tr>
                     <c:forEach var="r" items="${myReservations}">
@@ -64,6 +121,7 @@
                         </tr>
                     </c:forEach>
                 </table>
+                </div>
             </c:otherwise>
         </c:choose>
     </div>
@@ -75,6 +133,7 @@
                 <p class="empty-state">You haven't borrowed any books yet.</p>
             </c:when>
             <c:otherwise>
+                <div class="table-container">
                 <table>
                     <tr><th>Book</th><th>Borrowed On</th><th>Due Date</th><th>Status</th></tr>
                     <c:forEach var="rec" items="${myBorrowed}">
@@ -86,6 +145,7 @@
                         </tr>
                     </c:forEach>
                 </table>
+                </div>
             </c:otherwise>
         </c:choose>
     </div>

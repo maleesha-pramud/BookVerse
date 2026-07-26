@@ -1,25 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.bookverse.dao.BookDAO" %>
-<%--
-    Home / welcome page.
-    Demonstrates the "application" and "out" implicit objects (visit
-    counter) plus a scriptlet-based time-of-day greeting. Business data
-    for the rest of the app flows through the Front Controller servlet;
-    this landing page reads the DAOs directly only to show a couple of
-    simple summary counts.
---%>
-<%
-    // application implicit object: a simple shared hit counter
-    Integer visits = (Integer) application.getAttribute("visitCount");
-    visits = (visits == null) ? 1 : visits + 1;
-    application.setAttribute("visitCount", visits);
-
-    // out implicit object + time-based greeting
-    int hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
-    String greeting = (hour < 12) ? "Good morning" : (hour < 18) ? "Good afternoon" : "Good evening";
-    pageContext.setAttribute("greeting", greeting);
-%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="bookDao" class="com.bookverse.dao.BookDAO" scope="application" />
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate var="hour" value="${now}" pattern="H" />
+<c:choose>
+    <c:when test="${hour < 12}"><c:set var="greeting" value="Good morning" scope="page" /></c:when>
+    <c:when test="${hour < 18}"><c:set var="greeting" value="Good afternoon" scope="page" /></c:when>
+    <c:otherwise><c:set var="greeting" value="Good evening" scope="page" /></c:otherwise>
+</c:choose>
+<c:set var="visitCount" value="${empty applicationScope.visitCount ? 1 : applicationScope.visitCount + 1}" scope="application" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +34,7 @@
 
     <div class="stats-row">
         <div class="stat-box">
-            <div class="num"><%= BookDAO.getInstance().getAllBooks().size() %></div>
+            <div class="num">${fn:length(bookDao.allBooks)}</div>
             <div class="label">Books in catalogue</div>
         </div>
         <div class="stat-box">

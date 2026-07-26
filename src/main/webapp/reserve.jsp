@@ -30,7 +30,8 @@
         <p><strong>Author:</strong> ${book.author}</p>
         <p><strong>Reserved by:</strong> ${sessionScope.member.fullName}</p>
         <p><strong>Reservation date:</strong>
-            <fmt:formatDate value="<%= new java.util.Date() %>" pattern="dd MMM yyyy, hh:mm a" />
+            <jsp:useBean id="reserveDate" class="java.util.Date" />
+            <fmt:formatDate value="${reserveDate}" pattern="dd MMM yyyy, hh:mm a" />
         </p>
     </div>
 

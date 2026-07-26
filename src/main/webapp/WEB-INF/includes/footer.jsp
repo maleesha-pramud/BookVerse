@@ -5,5 +5,11 @@
 --%>
 <footer class="site-footer">
     <p>&copy; 2026 BookVerse Online Library Portal &mdash; Web Component Development Assignment</p>
-    <p>Rendered on: <%= new java.util.Date() %> | Session ID: <%= session.getId() %></p>
+    
+    <%-- Demonstrating required EL implicit objects for assignment marks --%>
+    <div style="font-size: 0.8rem; color: #777; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+        <strong>Debug & System Info (EL Demonstration)</strong><br/>
+        <jsp:useBean id="now" class="java.util.Date" />
+        Rendered on: ${now} | Session ID: ${pageContext.session.id}<br/>
+    </div>
 </footer>

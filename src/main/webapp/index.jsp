@@ -53,10 +53,6 @@
         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/controller?action=registerForm">Create Account</a>
     </div>
 
-    <div class="card">
-        <h3>Demo accounts</h3>
-        <p>Member &mdash; username: <strong>member1</strong> / password: <strong>member123</strong></p>
-        <p>Admin &mdash; username: <strong>admin</strong> / password: <strong>admin123</strong></p>
     </div>
 </div>
 

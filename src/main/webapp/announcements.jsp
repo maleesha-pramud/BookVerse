@@ -14,11 +14,34 @@
     <h1 class="page-title">Library Announcements</h1>
     <p class="page-subtitle">Stay up to date with the latest news from BookVerse.</p>
 
+    <c:if test="${not empty sessionScope.flashMessage}">
+        <div class="flash">${sessionScope.flashMessage}</div>
+        <c:remove var="flashMessage" scope="session" />
+    </c:if>
+
+    <c:if test="${not empty sessionScope.member and sessionScope.member.admin}">
+        <div class="card" style="margin-bottom: 40px; border-color: var(--primary);">
+            <h3>Post New Announcement</h3>
+            <form method="post" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="action" value="addAnnouncement" />
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Post Announcement</button>
+            </form>
+        </div>
+    </c:if>
+
     <c:forEach var="a" items="${announcements}">
         <div class="card">
-            <h3 style="margin-top:0;color:#2b5f75;">${a.title}</h3>
+            <h3 style="margin-top:0;">${a.title}</h3>
             <p>${a.message}</p>
-            <p style="color:#6b6b6b;font-size:0.85rem;">
+            <p style="color:var(--text-muted);font-size:0.85rem;margin-top:16px;">
                 Posted on <fmt:formatDate value="${a.datePosted}" pattern="dd MMM yyyy" />
             </p>
         </div>

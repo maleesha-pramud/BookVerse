@@ -5,10 +5,7 @@ import com.bookverse.dao.BookDAO;
 import com.bookverse.dao.BorrowDAO;
 import com.bookverse.dao.MemberDAO;
 import com.bookverse.dao.ReservationDAO;
-import com.bookverse.model.Book;
-import com.bookverse.model.BorrowRecord;
-import com.bookverse.model.Member;
-import com.bookverse.model.Reservation;
+import com.bookverse.model.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -103,6 +100,9 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "announcements":
                 view = showAnnouncements(request);
+                break;
+            case "addAnnouncement":
+                view = doAddAnnouncement(request);
                 break;
             case "addBookForm":
                 view = "admin_addbook.jsp";
@@ -289,6 +289,20 @@ public class ControllerServlet extends HttpServlet {
     private String showAnnouncements(HttpServletRequest request) {
         request.setAttribute("announcements", AnnouncementDAO.getInstance().getAllAnnouncements());
         return "announcements.jsp";
+    }
+
+    private String doAddAnnouncement(HttpServletRequest request) {
+        Member member = getLoggedInMember(request);
+        if (member == null || !member.isAdmin()) {
+            return "login.jsp";
+        }
+        String title = request.getParameter("title");
+        String message = request.getParameter("message");
+        if (title != null && !title.trim().isEmpty() && message != null && !message.trim().isEmpty()) {
+            AnnouncementDAO.getInstance().addAnnouncement(new Announcement(0, title, message, new Date()));
+            request.getSession().setAttribute("flashMessage", "Announcement posted successfully.");
+        }
+        return showAnnouncements(request);
     }
 
     private String doAddBook(HttpServletRequest request) {

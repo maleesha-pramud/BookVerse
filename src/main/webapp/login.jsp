@@ -35,6 +35,12 @@
             <a href="${pageContext.request.contextPath}/controller?action=registerForm">Register here</a>
         </p>
     </form>
+
+    <div class="card" style="max-width: 480px; margin: 0 auto; text-align: center; background: #f8fafc; border: 1px dashed var(--border); box-shadow: none;">
+        <h3 style="margin-bottom: 12px; font-size: 1.05rem;">Demo Accounts</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 4px;">Member: <strong>member1</strong> / <strong>member123</strong></p>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Admin: <strong>admin</strong> / <strong>admin123</strong></p>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/includes/footer.jsp" />

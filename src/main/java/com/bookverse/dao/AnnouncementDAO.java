@@ -15,21 +15,21 @@ public class AnnouncementDAO {
     private final AtomicInteger idGenerator = new AtomicInteger(1);
 
     private AnnouncementDAO() {
-        add(new Announcement(0, "Extended Opening Hours",
-                "BookVerse's digital reading room is now available 24/7 for all members.", new Date()));
-        add(new Announcement(0, "New Arrivals: Science Fiction",
-                "Check out our newly added collection of science-fiction titles in the catalogue.", new Date()));
-        add(new Announcement(0, "Scheduled Maintenance",
+        addAnnouncement(new Announcement(0, "Scheduled Maintenance",
                 "The portal will undergo brief maintenance this weekend between 2 AM and 4 AM.", new Date()));
+        addAnnouncement(new Announcement(0, "New Arrivals: Science Fiction",
+                "Check out our newly added collection of science-fiction titles in the catalogue.", new Date()));
+        addAnnouncement(new Announcement(0, "Extended Opening Hours",
+                "BookVerse's digital reading room is now available 24/7 for all members.", new Date()));
     }
 
     public static AnnouncementDAO getInstance() {
         return INSTANCE;
     }
 
-    private synchronized void add(Announcement a) {
+    public synchronized void addAnnouncement(Announcement a) {
         a.setId(idGenerator.getAndIncrement());
-        announcements.add(a);
+        announcements.add(0, a);
     }
 
     public synchronized List<Announcement> getAllAnnouncements() {

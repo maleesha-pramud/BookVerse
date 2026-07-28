@@ -19,16 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Front Controller Servlet - the single entry point ("C" in MVC) for every
- * user action in the application. It receives requests, delegates work to
- * the DAO / Model layer, places results in an appropriate scope, and
- * forwards to the correct JSP view.
- *
- * Using one controller servlet (rather than scattering logic across many
- * servlets or, worse, inside the JSPs themselves) demonstrates the
- * Front Controller design pattern in addition to the mandatory MVC pattern.
- */
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
 
@@ -36,8 +26,6 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // Place the singleton BookDAO into the application scope on startup 
-        // so JSPs (like index.jsp) can access it directly via EL without scriptlets or useBean
         getServletContext().setAttribute("bookDao", BookDAO.getInstance());
     }
 
@@ -139,10 +127,7 @@ public class ControllerServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // ---------------------------------------------------------------
     // Action handlers
-    // ---------------------------------------------------------------
-
     private String showCatalogue(HttpServletRequest request) {
         String category = request.getParameter("category");
         String keyword = request.getParameter("keyword");
@@ -440,10 +425,7 @@ public class ControllerServlet extends HttpServlet {
         return showManageUsers(request);
     }
 
-    // ---------------------------------------------------------------
     // Helpers
-    // ---------------------------------------------------------------
-
     private Member getLoggedInMember(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {

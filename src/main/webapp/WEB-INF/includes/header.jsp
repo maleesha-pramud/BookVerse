@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-    Shared navigation header, reused on every page via <jsp:include>.
-    Demonstrates: request/session implicit objects, EL, JSTL c:if/c:choose.
---%>
+
 <div class="navbar">
     <a class="brand" href="${pageContext.request.contextPath}/controller?action=catalogue">
         Book<span>Verse</span>

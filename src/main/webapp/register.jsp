@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/includes/header.jsp" />
+<jsp:include page="WEB-INF/includes/header.jsp" />
 
 <div class="container">
     <h1 class="page-title">Create an Account</h1>
@@ -45,6 +45,6 @@
     </form>
 </div>
 
-<jsp:include page="/WEB-INF/includes/footer.jsp" />
+<jsp:include page="WEB-INF/includes/footer.jsp" />
 </body>
 </html>

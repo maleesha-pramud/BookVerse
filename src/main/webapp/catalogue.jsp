@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="bv" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="bv" tagdir="WEB-INF/tags" %>
 <%--
     <jsp:useBean> + <jsp:setProperty property="*"> populate a plain
     JavaBean (SearchFilterBean) straight from the request parameters so the
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/includes/header.jsp" />
+<jsp:include page="WEB-INF/includes/header.jsp" />
 
 <div class="container">
     <h1 class="page-title">Book Catalogue</h1>
@@ -59,6 +59,6 @@
     </c:choose>
 </div>
 
-<jsp:include page="/WEB-INF/includes/footer.jsp" />
+<jsp:include page="WEB-INF/includes/footer.jsp" />
 </body>
 </html>

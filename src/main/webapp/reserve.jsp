@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/includes/header.jsp" />
+<jsp:include page="WEB-INF/includes/header.jsp" />
 
 <div class="container">
     <h1 class="page-title">Reservation Confirmed</h1>
@@ -39,6 +39,6 @@
     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/controller?action=catalogue">Continue Browsing</a>
 </div>
 
-<jsp:include page="/WEB-INF/includes/footer.jsp" />
+<jsp:include page="WEB-INF/includes/footer.jsp" />
 </body>
 </html>

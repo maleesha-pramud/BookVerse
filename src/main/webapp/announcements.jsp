@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/includes/header.jsp" />
+<jsp:include page="WEB-INF/includes/header.jsp" />
 
 <div class="container">
     <h1 class="page-title">Library Announcements</h1>
@@ -48,6 +48,6 @@
     </c:forEach>
 </div>
 
-<jsp:include page="/WEB-INF/includes/footer.jsp" />
+<jsp:include page="WEB-INF/includes/footer.jsp" />
 </body>
 </html>

@@ -1,14 +1,3 @@
-<%--
-    Tag File: bookCard.tag
-    A second custom tag, implemented as a JSP Tag File rather than a Java
-    class, demonstrating both custom-tag mechanisms required by the brief.
-
-    Attribute:
-      book - a com.bookverse.model.Book instance to render as a card.
-
-    Usage (after declaring the tagdir taglib directive):
-      <bv:bookCard book="${b}" />
---%>
 <%@ tag description="Displays a single book as a catalogue card" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="bv" uri="http://bookverse.com/tags" %>

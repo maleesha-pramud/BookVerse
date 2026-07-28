@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/includes/header.jsp" />
+<jsp:include page="WEB-INF/includes/header.jsp" />
 
 <div class="container">
     <a href="${pageContext.request.contextPath}/controller?action=catalogue">&larr; Back to Catalogue</a>

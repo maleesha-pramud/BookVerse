@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Data Access Object for Member records (Singleton, in-memory). */
 public class MemberDAO {
 
     private static final MemberDAO INSTANCE = new MemberDAO();

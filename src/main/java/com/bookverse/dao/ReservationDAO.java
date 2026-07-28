@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Data Access Object for Reservation records (Singleton, in-memory). */
 public class ReservationDAO {
 
     private static final ReservationDAO INSTANCE = new ReservationDAO();

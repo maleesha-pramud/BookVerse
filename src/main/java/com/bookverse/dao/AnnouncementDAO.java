@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Data Access Object for library Announcements (Singleton, in-memory). */
 public class AnnouncementDAO {
 
     private static final AnnouncementDAO INSTANCE = new AnnouncementDAO();

@@ -6,15 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Data Access Object for Book records.
- * Implemented as a Singleton so a single, shared in-memory catalogue is
- * used across the whole application (data is seeded on first access).
- *
- * This keeps the assessment focused on JSP/EL/JSTL/Tag concepts rather than
- * JDBC plumbing, while still separating data access from the view (DAO
- * pattern) and supporting the Model layer of the overall MVC design.
- */
 public class BookDAO {
 
     private static final BookDAO INSTANCE = new BookDAO();

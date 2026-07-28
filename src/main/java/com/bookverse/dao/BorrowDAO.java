@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Data Access Object for BorrowRecord entries (Singleton, in-memory). */
 public class BorrowDAO {
 
     private static final BorrowDAO INSTANCE = new BorrowDAO();

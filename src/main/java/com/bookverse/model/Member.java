@@ -2,10 +2,6 @@ package com.bookverse.model;
 
 import java.io.Serializable;
 
-/**
- * JavaBean representing a library member (or an admin/staff user).
- * Stored in the session scope once a user logs in.
- */
 public class Member implements Serializable {
 
     private int id;

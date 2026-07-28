@@ -3,7 +3,6 @@ package com.bookverse.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/** JavaBean representing a borrowing history entry for a member. */
 public class BorrowRecord implements Serializable {
 
     private int id;

@@ -3,7 +3,6 @@ package com.bookverse.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/** JavaBean representing a book reservation made by a member. */
 public class Reservation implements Serializable {
 
     private int id;

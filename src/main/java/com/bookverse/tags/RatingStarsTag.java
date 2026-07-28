@@ -5,14 +5,6 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
-/**
- * Custom Simple Tag Handler.
- * Renders a numeric rating (e.g. 4.5) as a row of filled/empty star
- * characters, e.g. ★★★★☆.
- *
- * Registered in /WEB-INF/tlds/bookverse.tld under prefix "bv" and used as:
- *   <bv:ratingStars value="${book.rating}" />
- */
 public class RatingStarsTag extends SimpleTagSupport {
 
     private double value;
